@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.todo-container {
+background-color: rgb(197, 197, 197);
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 50px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px #707070;
+}
+
+h1 {
+  font-size: 24px;
+
+}
+
+input[type="text"] {
+    text-align: center;
+    width: 70%;
+    padding: 8px;
+    margin-right: 10px;
+}
+
+button {
+  border : 1px solid #707070;
+  padding: 8px 15px;
+  background-color: #d3548f; 
+  color: white;
+}
+
+
+li {
+ 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.delete-button {
+  background-color: #4a7d9b;
+  color: white;
+  padding: 5px 10px;
+  
+}
+
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1>ToDo List</h1>
+        <input type="text" id="taskInput" placeholder="Yeni Görev Ekle..">
+        <button id="addTaskButton">Ekle</button>
+        <ul  id="taskList" ></ul>
+      </div>
+
+      <script>
+        let taskInput = document.getElementById('taskInput');
+        let addTaskButton = document.getElementById('addTaskButton');
+        let taskList = document.getElementById('taskList');
+
+        addTaskButton.addEventListener('click', addTask);
+
+        function addTask() {
+        let taskText = taskInput.value;
+        if (taskText !== '') {
+            let taskItem = document.createElement('li');
+            taskItem.innerHTML = `
+            <li> ${taskText}</li>
+            <button class="delete-button">Sil</button>
+            `;
+            taskList.appendChild(taskItem);
+            taskInput.value = '';
+
+            let deleteButton = taskItem.querySelector('.delete-button');
+            deleteButton.addEventListener('click', () => {
+            taskList.removeChild(taskItem);
+            });
+        }
+        }
+
+      </script>
+      <!-- .querySelector('.delete-button') ifadesi, taskItem öğesi içinde sınıfı "delete-button" olan bir HTML öğesini seçer. -->
+</body>
+</html>

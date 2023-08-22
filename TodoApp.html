@@ -39,6 +39,7 @@ button {
   padding: 8px 15px;
   background-color: #d3548f; 
   color: white;
+  
 }
 
 
@@ -56,7 +57,7 @@ li {
   padding: 5px 10px;
   
 }
-
+ 
     </style>
 </head>
 <body>
@@ -67,32 +68,60 @@ li {
         <ul  id="taskList" ></ul>
       </div>
 
-      <script>
-        let taskInput = document.getElementById('taskInput');
-        let addTaskButton = document.getElementById('addTaskButton');
-        let taskList = document.getElementById('taskList');
+     
 
-        addTaskButton.addEventListener('click', addTask);
+<script>
 
-        function addTask() {
-        let taskText = taskInput.value;
-        if (taskText !== '') {
-            let taskItem = document.createElement('li');
-            taskItem.innerHTML = `
-            <li> ${taskText}</li>
-            <button class="delete-button">Sil</button>
-            `;
-            taskList.appendChild(taskItem);
-            taskInput.value = '';
+  let taskInput = document.getElementById('taskInput');
+  let addTaskButton = document.getElementById('addTaskButton');
+  let taskList = document.getElementById('taskList');
 
-            let deleteButton = taskItem.querySelector('.delete-button');
-            deleteButton.addEventListener('click', () => {
-            taskList.removeChild(taskItem);
-            });
-        }
-        }
+  addTaskButton.addEventListener('click', addTask);
 
-      </script>
+  function addTask() {
+    let taskText = taskInput.value;
+    if (taskText !== '') {
+      let taskItem = document.createElement('li');
+      taskItem.innerHTML = `
+        <li> ${taskText}</li>
+        <button class="edit-button">Düzenle</button>
+        <button class="delete-button">Sil</button>
+      `;
+      taskList.appendChild(taskItem);
+      taskInput.value = '';
+
+      let deleteButton = taskItem.querySelector('.delete-button');
+      deleteButton.addEventListener('click', () => {
+        taskList.removeChild(taskItem);
+      });
+
+      let editButton = taskItem.querySelector('.edit-button');
+      editButton.addEventListener('click', () => {
+        editTask(taskItem); // Düzenleme işlevini çağır
+      });
+    }
+  }
+
+  function editTask(taskItem) {
+    let taskTextElement = taskItem.querySelector('li');
+    let taskText = taskTextElement.textContent;
+
+    // Düzenlemeyi başlat
+    taskTextElement.innerHTML = `<input type="text" value="${taskText}" />`;
+    let saveButton = document.createElement('button');
+    saveButton.textContent = 'Kaydet';
+    taskItem.appendChild(saveButton);
+
+    saveButton.addEventListener('click', () => {
+      let updatedText = taskTextElement.querySelector('input').value;
+      taskTextElement.innerHTML = updatedText;
+
+      // Düzenleme işlevselliğini burada güncelle (localStorage, diziyi güncelleme, vb.)
+      saveButton.remove(); // Kaydet düğmesini kaldır
+    });
+  }
+</script>
+ 
       <!-- .querySelector('.delete-button') ifadesi, taskItem öğesi içinde sınıfı "delete-button" olan bir HTML öğesini seçer. -->
 </body>
 </html>
